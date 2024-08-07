@@ -1,7 +1,15 @@
-﻿namespace Core.Common;
+﻿
+using Core.Enums;
+namespace Core.Common;
 
 public class Chain
 {
-    public string Title { get; set; }
+    public required string? Title { get; set; }
+    
+    // тестируемый объект
+    public required string PentestObj { get; set; }
+    
+    // используемые технологии
+    public List<Tag>? Tags { get; set; }
     
 }
