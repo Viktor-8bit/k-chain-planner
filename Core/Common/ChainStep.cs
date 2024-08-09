@@ -3,16 +3,27 @@
 using CSharpFunctionalExtensions;
 namespace Core.Common;
 
-public class ChainStep(string title, string description, Chain fatherChain, DateOnly? start, DateOnly? _end)
+public class ChainStep
 {
-    public string Title { get; private set; } = title;
-    public string Description { get; private set; } = description;
-    public int StepId { get; private set; } = fatherChain.StepChainLastId;
-    
-    public DateOnly? Start { get; private set; } = start;  // начало этапа
-    public DateOnly? End { get; private set; } = _end;     // конец этапа
 
-    public Chain FatherChain { get; private set; } = fatherChain;
+    public ChainStep(string title, string description, Chain fatherChain, DateOnly? start, DateOnly? _end)
+    {
+        Title = title;
+        Description = description;
+        StepId = fatherChain.StepChainLastId;
+        FatherChain = fatherChain;
+        Start = start;
+        End = _end;
+    }
+    private ChainStep() { }
+
+    public int Id { get; private set; }
+    public string Title { get; private set; }
+    public string Description { get; private set; }
+    public int StepId { get; private set; }
+    public DateOnly? Start { get; private set; }     // начало этапа
+    public DateOnly? End { get; private set; }       // конец этапа
+    public Chain FatherChain { get; set; }
 
     public static Result<ChainStep> CreateChainStep(string title, string description, Chain fatherChain, DateOnly? start, DateOnly? _end)
     {
@@ -23,7 +34,6 @@ public class ChainStep(string title, string description, Chain fatherChain, Date
             if (start.Value > _end.Value) return Result.Failure<ChainStep>("Дата начала должна быть ранее даты конца");
 
         var newChainStep = new ChainStep(title, description, fatherChain, start, _end);
-        fatherChain.IncreaseChainStepLastId();
         return Result.Success(newChainStep);
     }
 

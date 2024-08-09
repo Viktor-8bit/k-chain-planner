@@ -14,7 +14,13 @@ public class ChainService(IChainRepository chainRepository, ITagRepository tagRe
     
     public async Task<Result<Chain>> AddChain(string pentestObj, List<Tag> tags)
     {
-        var chain = Chain.CreateChain(pentestObj, tags);
+        var chain = Chain.CreateChain(pentestObj);
+
+        foreach (var t in tags)
+        {
+            var result = chain.Value.AddTag(t);
+        }
+        
         if (chain.IsFailure) return Result.Failure<Chain>(chain.Error);
         return await chainRepository.AddChain(chain.Value);
     }

@@ -9,6 +9,7 @@ namespace Core.Common;
 
 public class Tag(TagColor tagColor, string instrumentName)
 {
+    public int Id { get; private set; }
     public TagColor TagColor { get; set; } = tagColor;
     public string InstrumentName { get; set; } = instrumentName;
     

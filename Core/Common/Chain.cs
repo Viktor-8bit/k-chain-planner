@@ -6,13 +6,13 @@ namespace Core.Common;
 
 public class Chain
 {
-
-    public Chain(string pentestObj, List<Tag> tags)
+    public Chain(string pentestObj)
     {
         PentestObj = pentestObj;
-        Tags = tags;
     }
     
+    public int Id { get; private set; }
+
     // тестируемый объект
     public string PentestObj { get; private set; }
     
@@ -22,10 +22,10 @@ public class Chain
     // последний id StepChain
     public int StepChainLastId { get; private set; } = 0;
     
-    public static Result<Chain> CreateChain(string pentestObj, List<Tag> tags)
+    public static Result<Chain> CreateChain(string pentestObj)
     {
         if (string.IsNullOrEmpty(pentestObj)) return Result.Failure<Chain>("Имя не должно быть пустым");
-        var newChain = new Chain(pentestObj, tags);
+        var newChain = new Chain(pentestObj);
         return Result.Success(newChain);
     }
 
