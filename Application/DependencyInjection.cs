@@ -4,6 +4,7 @@
 
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
+using Application.Services;
 
 namespace Application;
 
@@ -21,6 +22,9 @@ public static class DependencyInjection
 
         service.AddValidatorsFromAssembly(assembly);
 
+        service.AddScoped<ChainService>();
+        service.AddScoped<ChainStepService>();
+        
         return service;
     
     }
