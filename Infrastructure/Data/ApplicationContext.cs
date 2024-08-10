@@ -23,8 +23,8 @@ public class ApplicationContext : DbContext
             .WithMany()
             .UsingEntity<Dictionary<string, object>>(
                 "ChainTag",  // Имя промежуточной таблицы
-                j => j.HasOne<Tag>().WithMany().HasForeignKey("id"),
-                j => j.HasOne<Chain>().WithMany().HasForeignKey("id")
+                j => j.HasOne<Tag>().WithMany().HasForeignKey("TagId"),
+                j => j.HasOne<Chain>().WithMany().HasForeignKey("ChainId")
             );
         
     }

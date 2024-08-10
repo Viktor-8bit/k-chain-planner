@@ -24,10 +24,15 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("ChainTag", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("ChainId")
                         .HasColumnType("integer");
 
-                    b.HasKey("id");
+                    b.Property<int>("TagId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ChainId", "TagId");
+
+                    b.HasIndex("TagId");
 
                     b.ToTable("ChainTag");
                 });
@@ -111,13 +116,13 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Core.Common.Chain", null)
                         .WithMany()
-                        .HasForeignKey("id")
+                        .HasForeignKey("ChainId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Core.Common.Tag", null)
                         .WithMany()
-                        .HasForeignKey("id")
+                        .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -68,20 +68,21 @@ namespace Infrastructure.Migrations
                 name: "ChainTag",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false)
+                    ChainId = table.Column<int>(type: "integer", nullable: false),
+                    TagId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ChainTag", x => x.id);
+                    table.PrimaryKey("PK_ChainTag", x => new { x.ChainId, x.TagId });
                     table.ForeignKey(
-                        name: "FK_ChainTag_Chains_id",
-                        column: x => x.id,
+                        name: "FK_ChainTag_Chains_ChainId",
+                        column: x => x.ChainId,
                         principalTable: "Chains",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ChainTag_Tags_id",
-                        column: x => x.id,
+                        name: "FK_ChainTag_Tags_TagId",
+                        column: x => x.TagId,
                         principalTable: "Tags",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -91,6 +92,11 @@ namespace Infrastructure.Migrations
                 name: "IX_ChainSteps_FatherChainId",
                 table: "ChainSteps",
                 column: "FatherChainId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ChainTag_TagId",
+                table: "ChainTag",
+                column: "TagId");
         }
 
         /// <inheritdoc />
