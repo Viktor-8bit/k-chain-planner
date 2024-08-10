@@ -17,7 +17,7 @@ public class Chain
     public string PentestObj { get; private set; }
     
     // используемые технологии
-    public List<Tag> Tags { get; private set; }
+    public List<Tag> Tags { get; private set; } = new List<Tag>();
 
     // последний id StepChain
     public int StepChainLastId { get; private set; } = 0;

@@ -3,7 +3,7 @@
 
 
 using Application.Services;
-using Core.Common;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Contracts;
 
@@ -11,7 +11,7 @@ namespace WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class ChainStepContiroller(ChainStepService chainStepService) : ControllerBase
+public class ChainStepContiroller(ChainStepService chainStepService, IMapper mapper) : ControllerBase
 {
     [HttpGet("GetChainStepsByFatherChain/{fatherChainId:int}")]
     public async Task<IActionResult> GetChainStepsByFatherChain([FromRoute] int fatherChainId)
@@ -19,7 +19,7 @@ public class ChainStepContiroller(ChainStepService chainStepService) : Controlle
         var result = await chainStepService.GetChainStepsByFatherChain(fatherChainId);
         if (result == null) 
             return NotFound();
-        return Ok(result);
+        return Ok(mapper.Map<List<ChainStepResponce>>(result));
     }
     
     [HttpPost("AddChainStepByFatherId/{fatherChainId:int}")]
@@ -40,10 +40,10 @@ public class ChainStepContiroller(ChainStepService chainStepService) : Controlle
         return Ok(result.Value);
     }
     
-    [HttpPost("DeleteChainStep/{id:int}")] 
-    public async Task<IActionResult> DeleteChainStep([FromRoute] int id, [FromBody] int fatherChainId)
+    [HttpPost("DeleteChainStep/{chainStepId:int}/{fatherChainId:int}")] 
+    public async Task<IActionResult> DeleteChainStep([FromRoute] int chainStepId, [FromRoute] int fatherChainId)
     {
-        await chainStepService.DeleteChainStep(id, fatherChainId);
+        await chainStepService.DeleteChainStep(chainStepId, fatherChainId);
         return Ok();
     }
     

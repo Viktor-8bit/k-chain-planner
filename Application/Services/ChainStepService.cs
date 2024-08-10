@@ -24,7 +24,18 @@ public class ChainStepService(IChainRepository chainRepository, IChainStepReposi
         facherChain.IncreaseChainStepLastId();
         return await chainStepRepository.AddChainStep(fatherChainId, result.Value);
     }
-
+    
+    public async Task DeleteChainStep(int chainStepId, int fatherChainId)
+    {
+        var fatherChainStep = await chainRepository.GetChainById(chainStepId);
+        var chainStep = await chainStepRepository.GetChainStepById(chainStepId);
+        
+        if(chainStep == null) return;
+        if (fatherChainStep != null) fatherChainStep.DecreaseChainStepLastId();
+        
+        await chainStepRepository.DeleteChainStep(chainStepId, fatherChainId);
+    } 
+    
     public async Task<Result<ChainStep>> UpdateChainStep(int id, string title, string description, DateOnly? start, DateOnly? end)
     {
         var chainStep = await chainStepRepository.GetChainStepById(id);
@@ -45,11 +56,6 @@ public class ChainStepService(IChainRepository chainRepository, IChainStepReposi
         return Result.Success(chainStep);
     }
 
-    public async Task DeleteChainStep(int id, int fatherChainId)
-    {
-        var chainStep = await chainStepRepository.GetChainStepById(id);
-        if(chainStep == null) return;
-        await chainStepRepository.DeleteChainStep(id, fatherChainId);
-    } 
+
     
 }

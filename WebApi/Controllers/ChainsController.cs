@@ -28,14 +28,13 @@ public class ChainsController(ChainService chainsService, IMapper mapper) : Cont
         return Ok(result);
     }
 
-    [HttpGet("GetChainById/{id:int}")]
-    public async Task<IActionResult> GetChainById([FromRoute] int id)
+    [HttpGet("GetChainById/{chainId:int}")]
+    public async Task<IActionResult> GetChainById([FromRoute] int chainId)
     {
-        var chain = await chainsService.GetChainById(id);
+        var chain = await chainsService.GetChainById(chainId);
         if (chain == null) 
             return NotFound();
-        
-        return Ok(chain);
+        return Ok(mapper.Map<List<ChainResponce>>(chain));
     }
 
     [HttpPost("CreateChain")]
@@ -48,26 +47,30 @@ public class ChainsController(ChainService chainsService, IMapper mapper) : Cont
         return Ok(result.Value);
     }
     
-    [HttpPost("UpdatePentestObj/{id:int}")]
-    public async Task<IActionResult> UpdatePentestObj([FromRoute] int id, [FromBody] string newPentestObj )
+    [HttpPost("UpdatePentestObj/{chainId:int}")]
+    public async Task<IActionResult> UpdatePentestObj([FromRoute] int chainId, [FromBody] string newPentestObj )
     {
-        await chainsService.UpdatePentestObj(id, newPentestObj);
-
+        var result = await chainsService.UpdatePentestObj(chainId, newPentestObj);
+        if (result.IsFailure) return BadRequest(result.Error);
         return Ok();
     }
 
-    [HttpPost("AddTag/{id:int}/{tagId:int}")]
-    public async Task<IActionResult> AddTag([FromRoute] int id, [FromRoute] int tagId)
+    [HttpPost("AddTag/{chainId:int}/{tagId:int}")]
+    public async Task<IActionResult> AddTag([FromRoute] int chainId, [FromRoute] int tagId)
     {
-        await chainsService.AddTag(id, tagId);
+        var result = await chainsService.AddTag(chainId, tagId);
+        if (result.IsFailure) 
+            return BadRequest(result.Error);
         return Ok();
     }
 
     
-    [HttpPost("RemoveTag/{id:int}/{tagId:int}")]
-    public async Task<IActionResult> RemoveTag([FromRoute] int id, [FromRoute] int tagId)
+    [HttpPost("RemoveTag/{chainId:int}/{tagId:int}")]
+    public async Task<IActionResult> RemoveTag([FromRoute] int chainId, [FromRoute] int tagId)
     {
-        await chainsService.RemoveTag(id, tagId);
+        var result = await chainsService.RemoveTag(chainId, tagId);
+        if (result.IsFailure) 
+            return BadRequest(result.Error);
         return Ok();
     }
     

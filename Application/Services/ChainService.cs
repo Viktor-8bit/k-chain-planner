@@ -29,14 +29,14 @@ public class ChainService(IChainRepository chainRepository, ITagRepository tagRe
         return await chainRepository.CreateChain(chain.Value);
     }
 
-    public async Task UpdatePentestObj(int id, string pentestObj) =>
+    public async Task<Result<Chain?>> UpdatePentestObj(int id, string pentestObj) =>
         await chainRepository.UpdatePentestObj(id, pentestObj);
 
 
-    public async Task AddTag(int id, int tagId) =>
+    public async Task<Result<Chain?>> AddTag(int id, int tagId) =>
         await chainRepository.AddTag(id, tagId);
 
-    public async Task RemoveTag(int id, int tagId) =>
+    public async Task<Result<Chain?>> RemoveTag(int id, int tagId) =>
         await chainRepository.RemoveTag(id, tagId);
     
     public async Task DeleteChain(int chainId) => 

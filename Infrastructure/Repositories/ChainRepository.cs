@@ -2,6 +2,7 @@
 using Core.Common;
 using Infrastructure.Data;
 using Core.Interfaces;
+using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
@@ -9,11 +10,14 @@ namespace Infrastructure.Repositories;
 public class ChainRepository(ApplicationContext _DbContext): IChainRepository
 {
     public async Task<IEnumerable<Chain>?> GetChains() => 
-        _DbContext.Chains.ToList<Chain>();
+        _DbContext.Chains
+            .Include(c => c.Tags)
+            .ToList<Chain>();
 
     public async Task<Chain?> GetChainById(int chainId)
     {
         return await _DbContext.Chains
+            .Include(c => c.Tags)
             .FirstOrDefaultAsync(c => c.Id == chainId);
     }
 
@@ -24,40 +28,53 @@ public class ChainRepository(ApplicationContext _DbContext): IChainRepository
         return chain;
     }
 
-    public async Task UpdatePentestObj(int chainId, string pentestObj)
+    public async Task<Result<Chain?>> UpdatePentestObj(int chainId, string pentestObj)
     {
         var chainToUpdate = _DbContext.Chains.FirstOrDefault(c => c.Id == chainId);
         if (chainToUpdate != null)
         {
-            chainToUpdate.ChangePentestObj(pentestObj);
+            var result = chainToUpdate.ChangePentestObj(pentestObj);
+            if (result.IsFailure) return Result.Failure<Chain?>(result.Error);
             await _DbContext.SaveChangesAsync();
-        }
+            return Result.Success<Chain?>(chainToUpdate);
+        } else return Result.Failure<Chain?>("Цепочка не найдена");
     }
 
-    public async Task AddTag(int chainId, int tagId)
+    public async Task<Result<Chain?>> AddTag(int chainId, int tagId)
+    
     {
-        var chainToUpdate = _DbContext.Chains.FirstOrDefault(c => c.Id == chainId);
-        if (chainToUpdate == null) return;
+        var chainToUpdate = _DbContext.Chains
+            .Include(c => c.Tags)
+            .FirstOrDefault(c => c.Id == chainId);
+        
+        if (chainToUpdate == null) 
+            return Result.Failure<Chain?>("Цепочка не найдена");
         
         var tagToAdd = _DbContext.Tags.FirstOrDefault(tg => tg.Id == tagId);
-        if (tagToAdd == null) return;
         
-        chainToUpdate.AddTag(tagToAdd);
+        if (tagToAdd == null) 
+            return Result.Failure<Chain?>("Тег не найден");
+        
+        var result = chainToUpdate.AddTag(tagToAdd);
+        if (result.IsFailure) return Result.Failure<Chain?>(result.Error);
+        
         await _DbContext.SaveChangesAsync();
+        return Result.Success<Chain?>(chainToUpdate);
     }
 
-    public async Task RemoveTag(int chainId, int tagId)
+    public async Task<Result<Chain?>> RemoveTag(int chainId, int tagId)
     {
-        
-        var chainToUpdate = _DbContext.Chains.FirstOrDefault(c => c.Id == chainId);
-        if (chainToUpdate == null) return;
+        var chainToUpdate = _DbContext.Chains
+            .Include(c => c.Tags)
+            .FirstOrDefault(c => c.Id == chainId);
+        if (chainToUpdate == null) return Result.Failure<Chain?>("Цепочка не найдена");
         
         var tagToRemove = _DbContext.Tags.FirstOrDefault(tg => tg.Id == tagId);
-        if (tagToRemove == null) return;
+        if (tagToRemove == null) return Result.Failure<Chain?>("Тег не найден");
         
         chainToUpdate.RemoveTag(tagToRemove);
         await _DbContext.SaveChangesAsync();
-        
+        return Result.Success<Chain?>(chainToUpdate);
     }
 
     public async Task DeleteChain(int chainId)
