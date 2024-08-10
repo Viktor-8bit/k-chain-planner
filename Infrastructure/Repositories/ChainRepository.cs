@@ -8,10 +8,8 @@ namespace Infrastructure.Repositories;
 
 public class ChainRepository(ApplicationContext _DbContext): IChainRepository
 {
-    public async Task<IEnumerable<Chain>?> GetChains()
-    {
-        return await _DbContext.Chains.ToListAsync<Chain>();
-    }
+    public async Task<IEnumerable<Chain>?> GetChains() => 
+        _DbContext.Chains.ToList<Chain>();
 
     public async Task<Chain?> GetChainById(int chainId)
     {

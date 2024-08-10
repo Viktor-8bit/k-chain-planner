@@ -1,4 +1,5 @@
 ﻿
+using System.Data.Entity;
 using Core.Common;
 using Infrastructure.Data;
 using Core.Interfaces;
@@ -7,28 +8,32 @@ namespace Infrastructure.Repositories;
 
 public class TagRepository(ApplicationContext _DbContext): ITagRepository
 {
+    public async Task<IEnumerable<Tag>?> GetTags() =>
+        _DbContext.Tags.ToList<Tag>();
+
+
     public async Task<Tag?> GetTagById(int tagId)
     {
         return _DbContext.Tags.FirstOrDefault(c => c.Id == tagId);
     }
 
-    public async Task AddTag(int chainId, Tag tag)
+    public async Task CreateTag(Tag tag)
     {
-        var chain = _DbContext.Chains.FirstOrDefault(c => c.Id == chainId);
-        if (chain == null) return;
-        chain.AddTag(tag);
+        var checkTag = _DbContext.Tags
+            .SingleOrDefault(tg => tg.InstrumentName == tag.InstrumentName);
+  
+        if (checkTag != null) return;
+        
+        _DbContext.Tags.Add(tag);
         await _DbContext.SaveChangesAsync();
     }
 
-    public async Task RemoveTag(int chainId, int tagId)
+    public async Task DeleteTag(int tagId)
     {
-        var chain = _DbContext.Chains.FirstOrDefault(c => c.Id == chainId);
-        if (chain == null) return;
-
-        var tag = _DbContext.Tags.FirstOrDefault(t => t.Id == tagId);
-        if (tag == null) return;
-        
-        chain.RemoveTag(tag);
+        var tagToDelete = _DbContext.Tags
+            .SingleOrDefault(tg => tg.Id == tagId);
+        if (tagToDelete == null) return;
+        _DbContext.Tags.Remove(tagToDelete);
         await _DbContext.SaveChangesAsync();
     }
 }

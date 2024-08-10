@@ -46,5 +46,34 @@ public class ChainsController(ChainService chainsService, IMapper mapper) : Cont
         
         return Ok(result.Value);
     }
+    
+    [HttpPost("UpdatePentestObj/{id:int}")]
+    public async Task<IActionResult> UpdatePentestObj([FromRoute] int id, [FromBody] string newPentestObj )
+    {
+        var result = await chainsService.UpdatePentestObj(id, newPentestObj);
+        if (result.IsFailure) 
+            return BadRequest(result.Error);
+        return Ok(result.Value);
+    }
 
+    [HttpPost("AddTag/{id:int}/{tagId:int}")]
+    public async Task<IActionResult> AddTag([FromRoute] int id, [FromRoute] int tagId)
+    {
+        var result = await chainsService.AddTag(id, tagId);
+        if (result.IsFailure) return BadRequest(result.Error);
+        return Ok(result.Value);
+    }
+    
+    [HttpPost("RemoveTag/{id:int}/{tagId:int}")]
+    public async Task<IActionResult> RemoveTag([FromRoute] int id, [FromRoute] int tagId)
+    {
+        var result = await chainsService.RemoveTag(id, tagId);
+        if (result.IsFailure) return BadRequest(result.Error);
+        return Ok(result.Value);
+    }
+    
+    [HttpPost("DeleteChain/{id:int}")]
+    public async Task DeleteChain([FromRoute] int id) => await chainsService.DeleteChain(id);
+
+    
 }

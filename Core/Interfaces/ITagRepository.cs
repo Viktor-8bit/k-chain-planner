@@ -4,7 +4,10 @@ namespace Core.Interfaces;
 
 public interface ITagRepository
 {
+    
+    public Task<IEnumerable<Tag>?> GetTags(); 
     public Task<Tag?> GetTagById(int tagId);
-    public Task AddTag(int chainId, Tag tag);
-    public Task RemoveTag(int chainId, int tagId);
+    public Task CreateTag(Tag tag);
+    
+    public Task DeleteTag(int tagId);
 }

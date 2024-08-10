@@ -1,17 +1,25 @@
 ﻿
 
 
-using System.Diagnostics.CodeAnalysis;
 using Core.Enums;
 using CSharpFunctionalExtensions;
 
 namespace Core.Common;
 
-public class Tag(TagColor tagColor, string instrumentName)
+public class Tag
 {
+
+    public Tag(TagColor tagColor, string instrumentName)
+    {
+        TagColor = tagColor;
+        InstrumentName = instrumentName;
+    }
+    
+    private Tag() {}
+    
     public int Id { get; private set; }
-    public TagColor TagColor { get; set; } = tagColor;
-    public string InstrumentName { get; set; } = instrumentName;
+    public TagColor TagColor { get; set; }
+    public string InstrumentName { get; set; }
     
     public static Result<Tag> CreateTag(TagColor tagColor, string instrumentName)
     {
@@ -31,7 +39,7 @@ public class Tag(TagColor tagColor, string instrumentName)
 
     public Tag ChangeColor(TagColor color)
     {
-        TagColor = tagColor;
+        TagColor = color;
         return this;
     }
 }

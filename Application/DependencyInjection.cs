@@ -24,6 +24,7 @@ public static class DependencyInjection
 
         service.AddScoped<ChainService>();
         service.AddScoped<ChainStepService>();
+        service.AddScoped<TagService>();
         
         return service;
     
