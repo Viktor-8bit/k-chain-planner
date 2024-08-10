@@ -4,6 +4,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Application.Services;
 using AutoMapper;
+using Microsoft.AspNetCore.Http.HttpResults;
 using WebApi.Contracts;
 
 
@@ -37,10 +38,10 @@ public class ChainsController(ChainService chainsService, IMapper mapper) : Cont
         return Ok(chain);
     }
 
-    [HttpPost("AddChain")]
-    public async Task<IActionResult> AddChain([FromBody] ChainRequest chainRequest)
+    [HttpPost("CreateChain")]
+    public async Task<IActionResult> CreateChain([FromBody] ChainRequest chainRequest)
     {
-        var result = await chainsService.AddChain(chainRequest.PentestObj, chainRequest.Tags);
+        var result = await chainsService.CreateChain(chainRequest.PentestObj, chainRequest.Tags);
         if (result.IsFailure) 
             return BadRequest(result.Error);
         
@@ -50,26 +51,24 @@ public class ChainsController(ChainService chainsService, IMapper mapper) : Cont
     [HttpPost("UpdatePentestObj/{id:int}")]
     public async Task<IActionResult> UpdatePentestObj([FromRoute] int id, [FromBody] string newPentestObj )
     {
-        var result = await chainsService.UpdatePentestObj(id, newPentestObj);
-        if (result.IsFailure) 
-            return BadRequest(result.Error);
-        return Ok(result.Value);
+        await chainsService.UpdatePentestObj(id, newPentestObj);
+
+        return Ok();
     }
 
     [HttpPost("AddTag/{id:int}/{tagId:int}")]
     public async Task<IActionResult> AddTag([FromRoute] int id, [FromRoute] int tagId)
     {
-        var result = await chainsService.AddTag(id, tagId);
-        if (result.IsFailure) return BadRequest(result.Error);
-        return Ok(result.Value);
+        await chainsService.AddTag(id, tagId);
+        return Ok();
     }
+
     
     [HttpPost("RemoveTag/{id:int}/{tagId:int}")]
     public async Task<IActionResult> RemoveTag([FromRoute] int id, [FromRoute] int tagId)
     {
-        var result = await chainsService.RemoveTag(id, tagId);
-        if (result.IsFailure) return BadRequest(result.Error);
-        return Ok(result.Value);
+        await chainsService.RemoveTag(id, tagId);
+        return Ok();
     }
     
     [HttpPost("DeleteChain/{id:int}")]

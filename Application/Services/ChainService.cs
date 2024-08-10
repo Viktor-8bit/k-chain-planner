@@ -16,7 +16,7 @@ public class ChainService(IChainRepository chainRepository, ITagRepository tagRe
     public async Task<Chain?> GetChainById(int chainId) => 
         await chainRepository.GetChainById(chainId);
     
-    public async Task<Result<Chain>> AddChain(string pentestObj, List<Tag> tags)
+    public async Task<Result<Chain>> CreateChain(string pentestObj, List<Tag> tags)
     {
         var chain = Chain.CreateChain(pentestObj);
         if (chain.IsFailure) return Result.Failure<Chain>(chain.Error);
@@ -26,52 +26,20 @@ public class ChainService(IChainRepository chainRepository, ITagRepository tagRe
             var result = chain.Value.AddTag(t);
         }
         
-        return await chainRepository.AddChain(chain.Value);
+        return await chainRepository.CreateChain(chain.Value);
     }
 
-    public async Task<Result<Chain>> UpdatePentestObj(int id, string pentestObj)
-    {
-        var chain = await chainRepository.GetChainById(id);
-        
-        if (chain == null) return Result.Failure<Chain>("Chain не найден");
-        
-        var result = chain.ChangePentestObj(pentestObj);
-        if (result.IsFailure) return Result.Failure<Chain>(result.Error);
-        
-        await chainRepository.UpdateChain(chain);
-        return Result.Success(chain);
-    }
+    public async Task UpdatePentestObj(int id, string pentestObj) =>
+        await chainRepository.UpdatePentestObj(id, pentestObj);
 
-    public async Task<Result<Chain>> AddTag(int id, int tagId)
-    {
-        var chain = await chainRepository.GetChainById(id);
-        if (chain == null) return Result.Failure<Chain>("Chain не найден");
-        
-        var tag = await tagRepository.GetTagById(tagId);
-        if (tag == null) return Result.Failure<Chain>("Tag не найден");
 
-        var result = chain.AddTag(tag);
-        if (result.IsFailure) return Result.Failure<Chain>(result.Error);
-        
-        await chainRepository.UpdateChain(chain);
-        return Result.Success(chain);
-    }
+    public async Task AddTag(int id, int tagId) =>
+        await chainRepository.AddTag(id, tagId);
 
-    public async Task<Result<Chain>> RemoveTag(int id, int tagId)
-    {
-        var chain = await chainRepository.GetChainById(id);
-        if (chain == null) return Result.Failure<Chain>("Chain не найден");
-        
-        var tag = await tagRepository.GetTagById(tagId);
-        if (tag == null) return Result.Failure<Chain>("Tag не найден");
-
-        var result = chain.RemoveTag(tag);
-        if (result.IsFailure) return Result.Failure<Chain>(result.Error);
-        
-        await chainRepository.UpdateChain(chain);
-        return Result.Success(chain);
-    }
+    public async Task RemoveTag(int id, int tagId) =>
+        await chainRepository.RemoveTag(id, tagId);
     
-    public async Task DeleteChain(int chainId) => await chainRepository.DeleteChain(chainId);
+    public async Task DeleteChain(int chainId) => 
+        await chainRepository.DeleteChain(chainId);
 
 }
