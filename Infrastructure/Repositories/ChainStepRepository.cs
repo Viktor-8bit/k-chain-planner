@@ -48,11 +48,15 @@ public class ChainStepRepository(ApplicationContext _DbContext): IChainStepRepos
         await _DbContext.SaveChangesAsync();
     }
 
-    public async Task DeleteChainStep(int chainStepId)
+    public async Task DeleteChainStep(int chainStepId, int fatherChainId)
     {
         var chainStep = _DbContext.ChainSteps.FirstOrDefault(cs => cs.Id == chainStepId);
         if (chainStep == null) return;
         _DbContext.ChainSteps.Remove(chainStep);
+
+        var fatherChain = _DbContext.Chains.FirstOrDefault(fc => fc.Id == fatherChainId);
+        if (fatherChain != null) fatherChain.DecreaseChainStepLastId();
+        
         await _DbContext.SaveChangesAsync();
     }
 }

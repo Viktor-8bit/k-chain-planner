@@ -9,5 +9,5 @@ public interface IChainStepRepository
     Task<IEnumerable<ChainStep>?> GetChainsStepsByFatherChain(int fatherChainId);
     Task<ChainStep> AddChainStep(int fatherChainId, ChainStep chainStep);
     Task UpdateChainStep(ChainStep chainStep);
-    Task DeleteChainStep(int chainStepId);
+    Task DeleteChainStep(int chainStepId, int fatherChainId);
 }

@@ -30,8 +30,8 @@ public class TagController(TagService tagService, IMapper mapper) : ControllerBa
     
     static T GetRandomEnumValue<T>(Random random)
     {
-        Array values = Enum.GetValues(typeof(T));
-        return (T)values.GetValue(random.Next(values.Length));
+        var values = Enum.GetValues(typeof(T));
+        return (T)values.GetValue(random.Next(values.Length))!;
     }
     
     [HttpPost("CreateTag")]
@@ -39,15 +39,19 @@ public class TagController(TagService tagService, IMapper mapper) : ControllerBa
     {
         var tag = mapper.Map<Tag>(tagRequest);
         tag.TagColor = GetRandomEnumValue<TagColor>(this._random);
-        await tagService.CreateTag(tag);
-        return Ok(tag);
+        var result = await tagService.CreateTag(tag);
+        if (result.IsFailure)
+            return BadRequest(result.Error);
+        return Ok(result.Value);
     }
     
     [HttpPost("DeleteTag/{id:int}")]
     public async Task<IActionResult> DeleteTag([FromRoute] int id)
     {
-        await tagService.DeleteTag(id);
-        return Ok();
+        var result = await tagService.DeleteTag(id);
+        if (result.IsFailure)
+            return BadRequest(result.Error);
+        return Ok(result);
     }
     
     

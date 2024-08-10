@@ -45,12 +45,11 @@ public class ChainStepService(IChainRepository chainRepository, IChainStepReposi
         return Result.Success(chainStep);
     }
 
-    public async Task DeleteChainStep(int id)
+    public async Task DeleteChainStep(int id, int fatherChainId)
     {
         var chainStep = await chainStepRepository.GetChainStepById(id);
         if(chainStep == null) return;
-        chainStep.FatherChain.DecreaseChainStepLastId();
-        await chainStepRepository.DeleteChainStep(id); 
+        await chainStepRepository.DeleteChainStep(id, fatherChainId);
     } 
     
 }
