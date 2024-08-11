@@ -12,6 +12,7 @@ public static class DependencyInjection
         service.AddRouting(); // options => options.LowercaseUrls = true
         service.AddControllers();
         service.AddAutoMapper(typeof(AppMappingProfile));
+        service.AddRazorPages();
         return service;
     }
 }

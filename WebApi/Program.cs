@@ -19,12 +19,14 @@ builder.Host.UseSerilog((context, configuration) =>
 
 var app = builder.Build();
 
-
+app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseRouting();
 
 #pragma warning disable ASP0014
 app.UseEndpoints(endpoints =>
 {
+    endpoints.MapRazorPages();
     endpoints.MapControllerRoute(
         "default",
         "api/{controller}/{action}/{id?}");
