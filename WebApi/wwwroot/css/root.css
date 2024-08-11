@@ -5,3 +5,14 @@
 body {
     background-color: #495057;
 }
+
+.global_button {
+    color: #a370f7;
+    border-color: #a370f7;
+}
+
+.global_button:hover {
+    background-color: #a370f7;
+    border-color: #a370f7;
+    color: #dee2e6;
+}

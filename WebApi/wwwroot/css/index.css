@@ -17,7 +17,7 @@
 
 .chains {
     padding: 1% 3% 1% 3%;
-    margin: 3% 5% 0 5%;
+    margin: 3% 10% 0 10%;
     align-items: center;
     background-color: #6c757d;
 }
@@ -35,4 +35,8 @@
     text-decoration: underline;
     margin: 0;
     color: #e0cffc;
+}
+
+.button_container {
+    margin: 4% 4% 4% 4%;
 }
