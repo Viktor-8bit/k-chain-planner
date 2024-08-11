@@ -8,16 +8,39 @@
 <!DOCTYPE html>
 
 <html>
-
+    
     <head>
         @await Html.PartialAsync("Components/Header")
-        <title>K planer</title>
+        <link rel="stylesheet" type="text/css" href="~/css/index.css" />
     </head>
 
     <body>
-        <div>
+        <div class="index_block">
+            <p>Результаты поиска</p>
+        </div>
 
+        <div class="chains">
+            @foreach (var chain in Model.Chains)
+            {
+                <div class="container row">
+                    <div class="col-4">
+                        <p class="chains_title">Тестируемый объект</p>
+                        <p class="chains_label">@chain.PentestObj</p>
+                    </div>
+                    <div class="col-5">
+                        <p class="chains_title">Технологии</p>
+                        <div class="row">
+                            @foreach (var tag in @chain.Tags)
+                            {
+                                <span class="col-2 badge rounded-pill text-bg-@tag.TagColor">@tag.InstrumentName</span>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <button type="button" class="btn btn-outline-info">Подробнее</button>
+                    </div>
+                </div>
+            }
         </div>
     </body>
-
 </html>
