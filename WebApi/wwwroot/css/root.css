@@ -8,6 +8,7 @@ body {
 
 .global_button {
     color: #a370f7;
+    background-color: white;
     border-color: #a370f7;
 }
 
@@ -15,4 +16,19 @@ body {
     background-color: #a370f7;
     border-color: #a370f7;
     color: #dee2e6;
+}
+
+.chains_title {
+    font-size: 20px;
+    font-weight: bolder;
+    margin: 0;
+    color: #c29ffa;
+}
+
+.chains_label {
+    font-size: 17px;
+    font-weight: normal;
+    text-decoration: underline;
+    margin: 0;
+    color: #e0cffc;
 }

@@ -25,34 +25,27 @@ public class ChainStepService(IChainRepository chainRepository, IChainStepReposi
         return await chainStepRepository.AddChainStep(fatherChainId, result.Value);
     }
     
-    public async Task DeleteChainStep(int chainStepId, int fatherChainId)
-    {
-        var fatherChainStep = await chainRepository.GetChainById(chainStepId);
-        var chainStep = await chainStepRepository.GetChainStepById(chainStepId);
-        
-        if(chainStep == null) return;
-        if (fatherChainStep != null) fatherChainStep.DecreaseChainStepLastId();
-        
+    public async Task DeleteChainStep(int chainStepId, int fatherChainId) =>
         await chainStepRepository.DeleteChainStep(chainStepId, fatherChainId);
-    } 
     
-    public async Task<Result<ChainStep>> UpdateChainStep(int id, string title, string description, DateOnly? start, DateOnly? end)
+    public async Task<Result<ChainStep>> UpdateChainStep(int id, ChainStep chainToUppdate)
     {
         var chainStep = await chainStepRepository.GetChainStepById(id);
         if(chainStep == null) return Result.Failure<ChainStep>("ChainStep не найден");
         
-        var result = chainStep.ChangeEndDate(end);
+        var result = chainStep.ChangeEndDate(chainToUppdate.End);
         if (result.IsFailure) return Result.Failure<ChainStep>(result.Error);
 
-        result = chainStep.ChangeStartDate(start);
+        result = chainStep.ChangeStartDate(chainToUppdate.Start);
         if (result.IsFailure) return Result.Failure<ChainStep>(result.Error);
 
-        result = chainStep.ChangeDescription(description);
+        result = chainStep.ChangeDescription(chainToUppdate.Description);
         if (result.IsFailure) return Result.Failure<ChainStep>(result.Error);
 
-        result = chainStep.ChangeTitle(title);
+        result = chainStep.ChangeTitle(chainToUppdate.Title);
         if (result.IsFailure) return Result.Failure<ChainStep>(result.Error);
-
+        
+        await chainStepRepository.UpdateChainStep(chainStep);
         return Result.Success(chainStep);
     }
 

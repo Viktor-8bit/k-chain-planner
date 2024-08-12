@@ -18,7 +18,7 @@ public class ChainStepRepository(ApplicationContext _DbContext): IChainStepRepos
     {
         var fatherChain = _DbContext.Chains.FirstOrDefault(fc => fc.Id == fatherChainId);
         if (fatherChain == null) return null;
-        List<ChainStep>? chainSteps = _DbContext.ChainSteps
+        var chainSteps = _DbContext.ChainSteps
             .Where(cs => cs.FatherChain.Id == fatherChain.Id)
             .ToList();
         return chainSteps;
@@ -28,7 +28,6 @@ public class ChainStepRepository(ApplicationContext _DbContext): IChainStepRepos
     {
         var fatherChain = _DbContext.Chains.FirstOrDefault(fc => fc.Id == fatherChainId);
         if (fatherChain == null) return null;
-        
         chainStep.FatherChain = fatherChain;
         _DbContext.ChainSteps.Add(chainStep);
         await _DbContext.SaveChangesAsync();
@@ -53,10 +52,25 @@ public class ChainStepRepository(ApplicationContext _DbContext): IChainStepRepos
         var chainStep = _DbContext.ChainSteps.FirstOrDefault(cs => cs.Id == chainStepId);
         if (chainStep == null) return;
         _DbContext.ChainSteps.Remove(chainStep);
-
+        await _DbContext.SaveChangesAsync();
         var fatherChain = _DbContext.Chains.FirstOrDefault(fc => fc.Id == fatherChainId);
-        if (fatherChain != null) fatherChain.DecreaseChainStepLastId();
-        
+        if (fatherChain != null)
+        {
+            fatherChain.DecreaseChainStepLastId();
+            await this.RecalculateChainStepByFatherChain(fatherChainId);
+        }
+    }
+
+    public async Task RecalculateChainStepByFatherChain(int fatherChainId)
+    {
+        var chainSteps = await this.GetChainsStepsByFatherChain(fatherChainId);
+        if (chainSteps is null || chainSteps.Count() == 0) return;
+        int stepId = 1;
+        foreach (var cs in chainSteps)
+        {
+            cs.StepId = stepId;
+            stepId += 1;
+        }
         await _DbContext.SaveChangesAsync();
     }
 }

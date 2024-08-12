@@ -1,0 +1,22 @@
+﻿
+
+
+
+.chain_alert {
+    margin: 8% 15% 0 15%;
+}
+
+.chain_block {
+    border: 11px dashed #c29ffa ;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10% 0 5% 10%;
+    padding: 2%;
+    border-radius: 50px;
+}
+
+.tag_container {
+    justify-items: left;
+}

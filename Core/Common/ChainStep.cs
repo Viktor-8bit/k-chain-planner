@@ -20,7 +20,7 @@ public class ChainStep
     public int Id { get; private set; }
     public string Title { get; private set; }
     public string Description { get; private set; }
-    public int StepId { get; private set; }
+    public int StepId { get; set; }
     public DateOnly? Start { get; private set; }     // начало этапа
     public DateOnly? End { get; private set; }       // конец этапа
     public Chain FatherChain { get; set; }

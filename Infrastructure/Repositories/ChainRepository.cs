@@ -80,8 +80,10 @@ public class ChainRepository(ApplicationContext _DbContext): IChainRepository
     public async Task DeleteChain(int chainId)
     {
         var chainToDelete = _DbContext.Chains.FirstOrDefault(c => c.Id == chainId);
+        var chainsSteps = _DbContext.ChainSteps.Where(cs => cs.FatherChain.Id == chainId).ToList();
         if (chainToDelete != null)
         {
+            _DbContext.ChainSteps.RemoveRange(chainsSteps);
             _DbContext.Chains.Remove(chainToDelete);
             await _DbContext.SaveChangesAsync();
         }

@@ -1,11 +1,11 @@
 ﻿
 
 
-
-using Application.Services;
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Application.Services;
 using WebApi.Contracts;
+using Core.Common;
+using AutoMapper;
 
 namespace WebApi.Controllers;
 
@@ -34,7 +34,7 @@ public class ChainStepContiroller(ChainStepService chainStepService, IMapper map
     [HttpPost("UpdateChainStepById/{id:int}")]
     public async Task<IActionResult> UpdateChainStep([FromBody] ChainStepRequest chainStepRequest, [FromRoute] int id)
     {
-        var result = await chainStepService.UpdateChainStep(id, chainStepRequest.Title, chainStepRequest.Description, chainStepRequest.Start, chainStepRequest.End);
+        var result = await chainStepService.UpdateChainStep(id, mapper.Map<ChainStep>(chainStepRequest));
         if (result.IsFailure) 
             return BadRequest(result.Error);
         return Ok(result.Value);

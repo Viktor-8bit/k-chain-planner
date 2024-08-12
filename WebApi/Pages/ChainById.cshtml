@@ -1,0 +1,66 @@
+﻿@page "{id:int}"
+@using Core.Common
+@using Microsoft.EntityFrameworkCore.Migrations
+@model WebApi.Pages.ChainById
+
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        @await Html.PartialAsync("Components/Header")
+        <link rel="stylesheet" type="text/css" href="~/css/ChainById.css" />
+    </head>
+    <body>
+        <div>
+
+            @if (@Model.Chain is null)
+              {
+                  <div class="chain_alert alert alert-warning alert-dismissible fade show" role="alert">
+                      <strong>Chain не найден 👀</strong> <br> Chain с id @Model.Id не был найден.
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              }
+            } 
+            
+            @if (@Model.Chain is not null) {
+            <div class="chain_block">
+                <p class="chains_title">Тестируемый объект</p>
+                <p class="chains_label">@Model.Chain!.PentestObj</p>
+                <p class="chains_title">Используемые технологии</p>
+                <div class="container row tag_container">
+                    @foreach (var tag in @Model.Chain!.Tags)
+                    {
+                        <span class="col-sm-2 col-md-3 badge rounded-pill text-bg-@tag.TagColor">@tag.InstrumentName</span>
+                    }
+                </div>
+            </div>
+            }
+            
+            @if (@Model.ChainSteps!.Count > 0)
+            {
+                <div class="chain_steps">
+                    
+                    @foreach (var chainStep in @Model.ChainSteps)
+                    {
+                        <li>@chainStep.Title</li>
+                        <li>@chainStep.Description</li>
+                        <li>@chainStep.Start - @chainStep.End</li>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="chain_alert alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Список ChainStep пуст 👀</strong> <br> Цепочка не содержит шагов.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+            
+        </div>
+    </body>
+</html>

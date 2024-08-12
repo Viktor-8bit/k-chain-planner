@@ -20,24 +20,27 @@
         </div>
 
         <div class="chains">
-            @foreach (var chain in Model.Chains)
+            @foreach (var chain in Model.Chains!)
             {
-                <div class="row">
+                <div class="row chain_block">
                     <div class="col-sm-6 col-md-4 ">
                         <p class="chains_title">Тестируемый объект</p>
                         <p class="chains_label">@chain.PentestObj</p>
                     </div>
-                    <div class="col-sm-6 col-md-5">
+                    <div class="col-sm-6 col-md-6">
                         <p class="chains_title">Технологии</p>
-                        <div class="row">
+                        <div class="row tag_container">
                             @foreach (var tag in @chain.Tags)
                             {
-                                <span class="col-sm-3 col-md-2 badge rounded-pill text-bg-@tag.TagColor">@tag.InstrumentName</span>
+                                <span class="tag col-sm-2 col-md-2 badge rounded-pill text-bg-@tag.TagColor">@tag.InstrumentName</span>
                             }
+                            <div class="after_last_tag"></div>
                         </div>
                     </div>
                     <div class="col-sm-5 col-md-2 d-flex justify-content-center">
-                        <button type="button" class="btn btn-outline-info global_button">Подробнее</button>
+                        <button type="button" 
+                                class="btn btn-outline-info global_button"
+                                onclick="window.location.href='ChainById/@chain.Id'">Подробнее</button>
                     </div>
                 </div>
             }

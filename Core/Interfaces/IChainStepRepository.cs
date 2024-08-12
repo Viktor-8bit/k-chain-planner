@@ -10,4 +10,5 @@ public interface IChainStepRepository
     Task<ChainStep> AddChainStep(int fatherChainId, ChainStep chainStep);
     Task UpdateChainStep(ChainStep chainStep);
     Task DeleteChainStep(int chainStepId, int fatherChainId);
+    Task RecalculateChainStepByFatherChain(int fatherChainId);
 }

@@ -20,7 +20,7 @@ public class Tag
     public int Id { get; private set; }
     public TagColor TagColor { get; set; }
     public string InstrumentName { get; set; }
-    
+
     public static Result<Tag> CreateTag(TagColor tagColor, string instrumentName)
     {
         if (string.IsNullOrEmpty(instrumentName))

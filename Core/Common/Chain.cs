@@ -20,7 +20,7 @@ public class Chain
     public List<Tag> Tags { get; private set; } = new List<Tag>();
 
     // последний id StepChain
-    public int StepChainLastId { get; private set; } = 0;
+    public int StepChainLastId { get; private set; } = 1;
     
     public static Result<Chain> CreateChain(string pentestObj)
     {

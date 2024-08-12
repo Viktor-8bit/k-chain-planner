@@ -33,7 +33,7 @@ public class ChainsController(ChainService chainsService, IMapper mapper) : Cont
         var chain = await chainsService.GetChainById(chainId);
         if (chain == null) 
             return NotFound();
-        return Ok(mapper.Map<List<ChainResponce>>(chain));
+        return Ok(mapper.Map<ChainResponce>(chain));
     }
 
     [HttpPost("CreateChain")]
