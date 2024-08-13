@@ -17,25 +17,25 @@
     </head>
     <body>
         <div>
-
+            
             @if (@Model.Chain is null)
-              {
-                  <div class="chain_alert alert alert-warning alert-dismissible fade show" role="alert">
-                      <strong>Chain не найден 👀</strong> <br> Chain с id @Model.Id не был найден.
-                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </div>
-              }
-            } 
+            {
+              <div class="chain_alert alert alert-warning alert-dismissible fade show" role="alert">
+                  <strong>Chain не найден 👀</strong> <br> Chain с id @Model.Id не был найден.
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            }
+            
             
             @if (@Model.Chain is not null) {
-            <div class="chain_block">
+            <div class="chain_block chain_info">
                 <p class="chains_title">Тестируемый объект</p>
                 <p class="chains_label">@Model.Chain!.PentestObj</p>
                 <p class="chains_title">Используемые технологии</p>
                 <div class="container row tag_container">
                     @foreach (var tag in @Model.Chain!.Tags)
                     {
-                        <span class="col-sm-2 col-md-3 badge rounded-pill text-bg-@tag.TagColor">@tag.InstrumentName</span>
+                        <span class="col col-md-4 badge rounded-pill text-bg-@tag.TagColor">@tag.InstrumentName</span>
                     }
                 </div>
             </div>
@@ -43,13 +43,46 @@
             
             @if (@Model.ChainSteps!.Count > 0)
             {
-                <div class="chain_steps">
+                <div class="chain_step_container">
                     
                     @foreach (var chainStep in @Model.ChainSteps)
                     {
-                        <li>@chainStep.Title</li>
-                        <li>@chainStep.Description</li>
-                        <li>@chainStep.Start - @chainStep.End</li>
+                        @if (chainStep.StepId % 2 == 0)
+                        {
+                            <div class="light_chainstep">
+                                <div class="chain_step row">
+                                    <div class="col-sm-0 col-md"></div>
+                                    <div class="col d-flex align-items-center justify-content-center order-2 order-md-1">
+                                        <div class="chains_title d-flex justify-content-center align-items-center">
+                                            <iframe src="~/csv/[.svg" width="15" height="50" sandbox></iframe>
+                                            <div>@chainStep.Start @chainStep.End</div>
+                                            <iframe src="~/csv/].svg" width="15" height="50" sandbox></iframe>
+                                        </div>
+                                    </div>
+                                    <div class="col order-1 order-md-2">
+                                        <p class="chains_title">@chainStep.Title</p>
+                                        <p class="chains_description">@chainStep.Description</p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="chain_step row">
+                                <div class="col">
+                                    <p class="chains_title">@chainStep.Title</p>
+                                    <p class="chains_description">@chainStep.Description</p>
+                                </div>
+                                <div class="col d-flex align-items-center justify-content-center">
+                                    <div class="chains_title d-flex justify-content-center align-items-center">
+                                        <iframe src="~/csv/[.svg" width="15" height="50" sandbox></iframe>
+                                        <div>@chainStep.Start @chainStep.End</div>
+                                        <iframe src="~/csv/].svg" width="15" height="50" sandbox></iframe>
+                                    </div>
+                                </div>
+                                <div class="col-sm-0 col-md"></div>
+                            </div>
+                        }
                     }
                 </div>
             }
@@ -60,6 +93,51 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             }
+
+            
+            <div class="d-block justify-content-center chain_add chain_block">
+                <form>
+                    <p class="chains_H1">Создание ChainStep</p>
+
+                    <div class="row mt-3">
+                        <div class="col col-md-4">
+                            <label class="chains_title">Имя объекта</label>
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control" placeholder="название">
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="mr-3 col">
+                            <label class="chains_title">Промежуток</label>
+                        </div>
+                        
+                        <div class="col d-flex align-items-center justify-content-between">
+                            <div class="chains_title d-flex justify-content-center align-items-center">
+                                <iframe src="~/csv/[.svg" width="15" height="50" sandbox></iframe>
+                                <input type="date" class="form-control-sm" placeholder="название">
+                                <input type="date" class="form-control-sm" placeholder="название">
+                                <iframe src="~/csv/].svg" width="15" height="50" sandbox></iframe>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col col-md-4">
+                            <label class="chains_title">Описание</label>
+                        </div>
+                        <div class="col">
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-outline-info global_button mt-4">Добавить новый ChainStep</button>
+                </form>
+            </div>
+
             
         </div>
     </body>

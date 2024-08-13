@@ -12,14 +12,8 @@ public class Chain
     }
     
     public int Id { get; private set; }
-
-    // тестируемый объект
     public string PentestObj { get; private set; }
-    
-    // используемые технологии
     public List<Tag> Tags { get; private set; } = new List<Tag>();
-
-    // последний id StepChain
     public int StepChainLastId { get; private set; } = 1;
     
     public static Result<Chain> CreateChain(string pentestObj)

@@ -2,7 +2,6 @@
 
 public enum TagColor {
     primary,
-    secondary,
     success,
     danger,
     warning,

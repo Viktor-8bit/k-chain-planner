@@ -7,16 +7,55 @@
 }
 
 .chain_block {
-    border: 11px dashed #c29ffa ;
     display: inline-flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.chain_info {
+    border: 11px dashed #c29ffa;
+    border-radius: 50px;
     margin: 10% 0 5% 10%;
     padding: 2%;
+}
+
+@media (max-width: 774px) {
+    .chain_info {
+        border: 4px dashed #c29ffa;
+        border-radius: 50px;
+    }
+}
+
+
+.chain_add {
+    border: 4px solid #c29ffa;
     border-radius: 50px;
+    padding: 5%;
+    margin: 5% 15% 5% 15%;
+}
+
+@media (max-width: 774px) {
+    .chain_add {
+        border: 3px solid #c29ffa;
+        border-radius: 50px;
+        padding: 3%;
+        margin: 5% 0 5% 0;
+    }
 }
 
 .tag_container {
     justify-items: left;
+}
+
+.chain_step {
+    padding: 2% 5% 2% 5%;
+    margin: 0 0 0 0;
+}
+
+.light_chainstep {
+    background-color: #6c757d;
+}
+
+.chain_step_container {
 }

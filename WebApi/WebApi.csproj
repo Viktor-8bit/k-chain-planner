@@ -31,4 +31,10 @@
       <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="wwwroot\csv\" />
+      <Folder Include="wwwroot\img\" />
+      <Folder Include="wwwroot\js\" />
+    </ItemGroup>
+
 </Project>
