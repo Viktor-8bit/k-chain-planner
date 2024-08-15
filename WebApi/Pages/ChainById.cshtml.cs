@@ -3,6 +3,7 @@
 
 
 
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Application.Services;
 using WebApi.Contracts;
@@ -11,20 +12,22 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Pages;
 
-public class ChainById : PageModel
+public class ChainByIdModel : PageModel
 {
+    // возвращаемое
     public ChainResponce? Chain { get; set; }
     public List<ChainStepResponce>? ChainSteps { get; set; }
     
+    // входиные параметры
     [BindProperty(SupportsGet = true)]
     public int? Id { get; set; }
-
-
+    
+    // сервисы 
     private readonly ChainStepService _chainStepService;
     private readonly ChainService _chainService;
     private readonly IMapper _mapper;
     
-    public ChainById(ChainStepService chainStepService, ChainService chainService, IMapper mapper)
+    public ChainByIdModel(ChainStepService chainStepService, ChainService chainService, IMapper mapper)
     {
         _chainStepService = chainStepService;
         _chainService = chainService;
@@ -44,4 +47,34 @@ public class ChainById : PageModel
                 ChainSteps = _mapper.Map<List<ChainStepResponce>>(chainSteps);
         }
     }
+    
+    
+    [BindProperty]
+    public ChainStepRequest ChainStepRequest { get; set; }
+    
+    // Метод для добавления нового ChainStep
+    public async Task<IActionResult> OnPostAddAsync()
+    {
+        if (!ModelState.IsValid)
+        {
+            return Page();
+        }
+
+        if (Id == null)
+            return Page();
+
+        var result = await _chainStepService.AddChainStep((int)Id, ChainStepRequest.Title, ChainStepRequest.Description, ChainStepRequest.Start, ChainStepRequest.End);
+
+        if (result.IsFailure)
+        {
+            ModelState.AddModelError(string.Empty, result.Error);
+            return Page();
+        }
+        return Redirect($"/ChainById/{Id}");
+    }
+    
+
+    
+
+    
 }

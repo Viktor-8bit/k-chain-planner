@@ -29,7 +29,6 @@ body {
 .chains_H1 {
     font-size: 40px;
     font-weight: bolder;
-    white-space: nowrap;
     margin: 0;
     color: #c29ffa;
 }

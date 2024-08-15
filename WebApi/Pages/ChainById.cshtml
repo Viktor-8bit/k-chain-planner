@@ -1,7 +1,6 @@
 ﻿@page "{id:int}"
-@using Core.Common
-@using Microsoft.EntityFrameworkCore.Migrations
-@model WebApi.Pages.ChainById
+@model WebApi.Pages.ChainByIdModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 
 @{
@@ -17,7 +16,6 @@
     </head>
     <body>
         <div>
-            
             @if (@Model.Chain is null)
             {
               <div class="chain_alert alert alert-warning alert-dismissible fade show" role="alert">
@@ -25,9 +23,8 @@
                   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
             }
-            
-            
-            @if (@Model.Chain is not null) {
+            @if (@Model.Chain is not null) 
+            {
             <div class="chain_block chain_info">
                 <p class="chains_title">Тестируемый объект</p>
                 <p class="chains_label">@Model.Chain!.PentestObj</p>
@@ -44,7 +41,6 @@
             @if (@Model.ChainSteps!.Count > 0)
             {
                 <div class="chain_step_container">
-                    
                     @foreach (var chainStep in @Model.ChainSteps)
                     {
                         @if (chainStep.StepId % 2 == 0)
@@ -93,52 +89,42 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             }
-
             
             <div class="d-block justify-content-center chain_add chain_block">
-                <form>
+                <form method="post">
                     <p class="chains_H1">Создание ChainStep</p>
-
                     <div class="row mt-3">
                         <div class="col col-md-4">
                             <label class="chains_title">Имя объекта</label>
                         </div>
                         <div class="col">
-                            <input type="text" class="form-control" placeholder="название">
+                            <input asp-for="ChainStepRequest.Title" type="text" class="form-control" placeholder="название">
                         </div>
                     </div>
-
                     <div class="row mt-3">
-                        <div class="mr-3 col">
+                        <div class="col-md-4 col">
                             <label class="chains_title">Промежуток</label>
                         </div>
-                        
-                        <div class="col d-flex align-items-center justify-content-between">
-                            <div class="chains_title d-flex justify-content-center align-items-center">
+                        <div class="col d-flex align-items-center justify-content-start">
+                            <div class="chains_title d-flex align-items-center justify-content-start">
                                 <iframe src="~/csv/[.svg" width="15" height="50" sandbox></iframe>
-                                <input type="date" class="form-control-sm" placeholder="название">
-                                <input type="date" class="form-control-sm" placeholder="название">
+                                <input asp-for="ChainStepRequest.Start" type="date" class="form-control-sm">
+                                <input asp-for="ChainStepRequest.End" type="date" class="form-control-sm">
                                 <iframe src="~/csv/].svg" width="15" height="50" sandbox></iframe>
                             </div>
                         </div>
-                        
-                        
                     </div>
-
                     <div class="row mt-3">
                         <div class="col col-md-4">
                             <label class="chains_title">Описание</label>
                         </div>
                         <div class="col">
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+                            <textarea asp-for="ChainStepRequest.Description" type="text" class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
                         </div>
                     </div>
-
-                    <button class="btn btn-outline-info global_button mt-4">Добавить новый ChainStep</button>
+                    <button type="submit" class="btn btn-outline-info global_button mt-4" asp-page-handler="add">Добавить новый ChainStep</button>
                 </form>
             </div>
-
-            
         </div>
     </body>
 </html>

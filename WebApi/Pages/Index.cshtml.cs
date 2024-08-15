@@ -29,6 +29,6 @@ public class Index : PageModel
 
         if (chains != null)
             Chains = _mapper.Map<List<ChainResponce>>(chains);
-        
     }
+    
 }
