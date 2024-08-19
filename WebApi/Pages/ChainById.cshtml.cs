@@ -48,7 +48,6 @@ public class ChainByIdModel : PageModel
         }
     }
     
-    
     [BindProperty]
     public ChainStepRequest ChainStepRequest { get; set; }
     
@@ -72,9 +71,18 @@ public class ChainByIdModel : PageModel
         }
         return Redirect($"/ChainById/{Id}");
     }
-    
 
-    
-
+    [BindProperty] 
+    public int ChainStepId { get; set; }
+    public async Task<IActionResult> OnPostDeleteAsync()
+    {
+        if (Id == null)
+        {
+            ModelState.AddModelError(string.Empty, "пост не найден");
+            return Page();
+        }
+        await _chainStepService.DeleteChainStep(ChainStepId, (int)Id);
+        return Redirect($"/ChainById/{Id}");
+    }
     
 }
