@@ -33,8 +33,10 @@ public class ChainStepRepository(ApplicationContext _DbContext): IChainStepRepos
         var fatherChain = _DbContext.Chains.FirstOrDefault(fc => fc.Id == fatherChainId);
         if (fatherChain == null) return null;
         chainStep.FatherChain = fatherChain;
+        fatherChain.IncreaseChainStepLastId();
         _DbContext.ChainSteps.Add(chainStep);
         await _DbContext.SaveChangesAsync();
+        await this.RecalculateChainStepByFatherChain(fatherChainId);
         return chainStep;
     }
 

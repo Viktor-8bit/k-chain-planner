@@ -59,6 +59,5 @@ public class UpdateChainStep : PageModel
         
         return Redirect($"/ChainById/{fatherChainId!}");
     }
-
     
 }

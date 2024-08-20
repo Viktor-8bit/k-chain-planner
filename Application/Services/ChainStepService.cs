@@ -21,7 +21,6 @@ public class ChainStepService(IChainRepository chainRepository, IChainStepReposi
 
         var result = ChainStep.CreateChainStep(title, description, facherChain, start, end);
         if (result.IsFailure) return Result.Failure<ChainStep>(result.Error);
-        facherChain.IncreaseChainStepLastId();
         return await chainStepRepository.AddChainStep(fatherChainId, result.Value);
     }
     
