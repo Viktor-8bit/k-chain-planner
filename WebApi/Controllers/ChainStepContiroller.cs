@@ -47,4 +47,12 @@ public class ChainStepContiroller(ChainStepService chainStepService, IMapper map
         return Ok();
     }
     
+    [HttpPost("GetChainStepById/{id:int}")]
+    public async Task<IActionResult> GetChainStep([FromRoute] int id)
+    {
+        var result = await chainStepService.GetChainStepById(id);
+        return Ok(result);
+    }
+
+    
 }

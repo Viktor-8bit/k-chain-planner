@@ -3,6 +3,7 @@
 using Core.Common;
 using Core.Interfaces;
 using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
 
@@ -10,7 +11,9 @@ public class ChainStepRepository(ApplicationContext _DbContext): IChainStepRepos
 {
     public async Task<ChainStep?> GetChainStepById(int chainStepId)
     {
-        var chainStep = _DbContext.ChainSteps.FirstOrDefault(cs => cs.Id == chainStepId);
+        var chainStep = _DbContext.ChainSteps
+            .Include(cs => cs.FatherChain)
+            .FirstOrDefault(cs => cs.Id == chainStepId);
         return chainStep;
     }
 
@@ -20,6 +23,7 @@ public class ChainStepRepository(ApplicationContext _DbContext): IChainStepRepos
         if (fatherChain == null) return null;
         var chainSteps = _DbContext.ChainSteps
             .Where(cs => cs.FatherChain.Id == fatherChain.Id)
+            .OrderBy(cs => cs.StepId)
             .ToList();
         return chainSteps;
     }

@@ -49,6 +49,6 @@ public class ChainStepService(IChainRepository chainRepository, IChainStepReposi
         return Result.Success(chainStep);
     }
 
-
-    
+    public async Task<ChainStep?> GetChainStepById(int id) => 
+        await chainStepRepository.GetChainStepById(id);
 }

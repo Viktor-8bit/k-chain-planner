@@ -1,0 +1,71 @@
+﻿@page "{id:int}"
+@using Core.Common
+@model WebApi.Pages.UpdateChainStep
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using System.Text.Json
+
+@{
+    Layout = null;
+    string StartDate = JsonSerializer.Serialize(Model.ChainStepRequest!.Start).Trim('"');
+    string EndDate = JsonSerializer.Serialize(Model.ChainStepRequest!.End).Trim('"');
+}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        @await Html.PartialAsync("Components/Header")
+        <link rel="stylesheet" type="text/css" href="~/css/ChainById.css" />
+        <link rel="stylesheet" type="text/css" href="~/css/UpdateChainStepRequest.css" />
+    </head>
+    <body>
+        <div class="mt-4">
+            @if (@Model.ChainStepRequest is null)
+            {
+            <div class="chain_alert alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>ChainStepRequest не найден 👀</strong> <br> ChainStepRequest с id @Model.Id не был найден.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            }
+            @if (@Model.ChainStepRequest is not null)
+            {
+                <div class="d-block justify-content-center chain_add chain_block">
+                    <form method="post">
+                        <input type="hidden" asp-for="@Model.ChainStepRequest.StepId"/>
+                        <p class="chains_H1">Обновление ChainStepRequest</p>
+                        <div class="row mt-3">
+                            <div class="col col-md-4">
+                                <label class="chains_title">Имя объекта</label>
+                            </div>
+                            <div class="col">
+                                <input value="@Model.ChainStepRequest!.Title" asp-for="ChainStepRequest.Title" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-4 col">
+                                <label class="chains_title">Промежуток</label>
+                            </div>
+                            <div class="col d-flex align-items-center justify-content-start">
+                                <div class="chains_title d-flex align-items-center justify-content-start">
+                                    <iframe src="~/csv/[.svg" width="15" height="50" sandbox></iframe>
+                                    <input value="@StartDate" asp-for="ChainStepRequest.Start" type="date" class="form-control-sm">
+                                    <input value="@EndDate" asp-for="ChainStepRequest.End" type="date" class="form-control-sm">
+                                    <iframe src="~/csv/].svg" width="15" height="50" sandbox></iframe>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col col-md-4">
+                                <label class="chains_title">Описание</label>
+                            </div>
+                            <div class="col">
+                                <textarea rows="5" cols="120" asp-for="@Model.ChainStepRequest!.Description" type="text" class="form-control" row="10"></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-outline-info global_button mt-4" asp-page-handler="update">Сохранить изменения</button>
+                        <button type="button" class="btn btn-outline-info global_button mt-4" onclick="window.location.href='/ChainById/9'">Отменить изменения</button>
+                    </form>
+                </div>
+            }
+        </div>
+    </body>
+</html>

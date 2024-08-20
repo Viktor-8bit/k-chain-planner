@@ -58,6 +58,17 @@
                                     <div class="col order-1 order-md-2">
                                         <p class="chains_title">@chainStep.Title</p>
                                         <p class="chains_description">@chainStep.Description</p>
+                                        <div class="row mt-3">
+                                            <div class="col d-flex justify-content-start">
+                                                <button type="submit" class="btn btn-primary global_button" onclick="window.location.href='/UpdateChainStep/@chainStep.Id'">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </button>
+                                                <form method="post">
+                                                    <input asp-for="ChainStepId" type="hidden" value="@chainStep.Id"/>
+                                                    <button type="submit" class="btn btn-primary global_button" asp-page-handler="delete"><i class="bi bi-trash"></i></button>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -70,7 +81,9 @@
                                     <p class="chains_description">@chainStep.Description</p>
                                     <div class="row mt-3">
                                         <div class="col d-flex justify-content-start">
-                                            <button type="submit" class="btn btn-primary global_button"><i class="bi bi-pencil-square"></i></button>
+                                        <button type="submit" class="btn btn-primary global_button" onclick="window.location.href='/UpdateChainStep/@chainStep.Id'">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </button>
                                             <form method="post">
                                                 <input asp-for="ChainStepId" type="hidden" value="@chainStep.Id"/>
                                                 <button type="submit" class="btn btn-primary global_button" asp-page-handler="delete"><i class="bi bi-trash"></i></button>
