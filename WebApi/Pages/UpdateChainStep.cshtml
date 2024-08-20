@@ -34,7 +34,7 @@
                         <p class="chains_H1">Обновление ChainStepRequest</p>
                         <div class="row mt-3">
                             <div class="col col-md-4">
-                                <label class="chains_title">Имя объекта</label>
+                                <label class="chains_title">Название этапа</label>
                             </div>
                             <div class="col">
                                 <input value="@Model.ChainStepRequest!.Title" asp-for="ChainStepRequest.Title" type="text" class="form-control">
@@ -47,8 +47,8 @@
                             <div class="col d-flex align-items-center justify-content-start">
                                 <div class="chains_title d-flex align-items-center justify-content-start">
                                     <iframe src="~/csv/[.svg" width="15" height="50" sandbox></iframe>
-                                    <input value="@StartDate" asp-for="ChainStepRequest.Start" type="date" class="form-control-sm">
-                                    <input value="@EndDate" asp-for="ChainStepRequest.End" type="date" class="form-control-sm">
+                                    <input value="@StartDate" asp-for="@Model.ChainStepRequest!.Start" type="date" class="form-control-sm">
+                                    <input value="@EndDate" asp-for="@Model.ChainStepRequest!.End" type="date" class="form-control-sm">
                                     <iframe src="~/csv/].svg" width="15" height="50" sandbox></iframe>
                                 </div>
                             </div>

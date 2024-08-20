@@ -32,11 +32,8 @@ public class ChainStepService(IChainRepository chainRepository, IChainStepReposi
     {
         var chainStep = await chainStepRepository.GetChainStepById(id);
         if(chainStep == null) return Result.Failure<ChainStep>("ChainStep не найден");
-        
-        var result = chainStep.ChangeEndDate(chainToUppdate.End);
-        if (result.IsFailure) return Result.Failure<ChainStep>(result.Error);
 
-        result = chainStep.ChangeStartDate(chainToUppdate.Start);
+        var result = chainStep.ChaingeDate(chainToUppdate.Start, chainToUppdate.End);
         if (result.IsFailure) return Result.Failure<ChainStep>(result.Error);
 
         result = chainStep.ChangeDescription(chainToUppdate.Description);

@@ -52,6 +52,11 @@ public class UpdateChainStep : PageModel
         
         var chainStepResponce = await _chainStepService.GetChainStepById((int)this.Id);
         var fatherChainId = chainStepResponce!.FatherChain.Id;
+
+        var result = await _chainStepService.UpdateChainStep((int)Id, _mapper.Map<ChainStep>(ChainStepRequest));
+        if (result.IsFailure)
+            return Page();
+        
         return Redirect($"/ChainById/{fatherChainId!}");
     }
 

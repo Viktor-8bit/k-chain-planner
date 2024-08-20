@@ -18,6 +18,7 @@ public class AppMappingProfile : Profile
         // ChainStep
         CreateMap<ChainStep, ChainStepResponce>();
         CreateMap<ChainStepRequest, ChainStep>();
+        CreateMap<ChainStepResponce, ChainStep>();
         
         // Tag
         CreateMap<Tag, TagResponce>();
