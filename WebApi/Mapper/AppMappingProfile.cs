@@ -1,5 +1,7 @@
 ﻿
 
+using System.Security.Cryptography;
+using System.Text;
 using Core.Common;
 using WebApi.Contracts;
 
@@ -20,8 +22,26 @@ public class AppMappingProfile : Profile
         CreateMap<ChainStepRequest, ChainStep>();
         CreateMap<ChainStepResponce, ChainStep>();
         
+        // User 
+        CreateMap<User, UserResponce>();
+        CreateMap<UserRequest, User>()
+            .ForMember(
+                dest => dest.HashPassword, 
+                opt => 
+                    opt.MapFrom(src => HashPassword(src.NoHashPassword)));
+        
         // Tag
         CreateMap<Tag, TagResponce>();
         CreateMap<TagRequest, Tag>();
+    }
+    
+    
+    private string HashPassword(string password)
+    {
+        using (var sha256 = SHA256.Create())
+        {
+            var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+            return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+        }
     }
 }

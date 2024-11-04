@@ -10,6 +10,8 @@ public class ApplicationContext : DbContext
     public DbSet<ChainStep> ChainSteps { get; set; }
     public DbSet<Tag> Tags { get; set; }
     
+    public DbSet<User> Users { get; set; }
+    
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -22,7 +24,7 @@ public class ApplicationContext : DbContext
             .HasMany(p => p.Tags)
             .WithMany()
             .UsingEntity<Dictionary<string, object>>(
-                "ChainTag",  // Имя промежуточной таблицы
+                "ChainTag", // Имя промежуточной таблицы
                 j => j.HasOne<Tag>().WithMany().HasForeignKey("TagId"),
                 j => j.HasOne<Chain>().WithMany().HasForeignKey("ChainId")
             );

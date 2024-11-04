@@ -6,20 +6,26 @@ namespace Core.Common;
 
 public class Chain
 {
-    public Chain(string pentestObj)
+    public Chain(string pentestObj, User creator)
     {
+        Creator = creator;
         PentestObj = pentestObj;
     }
     
+    public Chain() {}
+    
     public int Id { get; private set; }
     public string PentestObj { get; private set; }
+    
+    public User Creator { get; private set; }
+
     public List<Tag> Tags { get; private set; } = new List<Tag>();
     public int StepChainLastId { get; private set; } = 1;
     
-    public static Result<Chain> CreateChain(string pentestObj)
+    public static Result<Chain> CreateChain(string pentestObj, User creator)
     {
         if (string.IsNullOrEmpty(pentestObj)) return Result.Failure<Chain>("Имя не должно быть пустым");
-        var newChain = new Chain(pentestObj);
+        var newChain = new Chain(pentestObj, creator);
         return Result.Success(newChain);
     }
 

@@ -11,7 +11,7 @@ namespace WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class ChainsController(ChainService chainsService, IMapper mapper) : ControllerBase
+public class ChainsController(ChainService chainsService, UserService userService, IMapper mapper) : ControllerBase
 {
 
     // public TimeZoneInfo KraskTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Krasnoyarsk Standard Time");
@@ -39,7 +39,12 @@ public class ChainsController(ChainService chainsService, IMapper mapper) : Cont
     [HttpPost("CreateChain")]
     public async Task<IActionResult> CreateChain([FromBody] ChainRequest chainRequest)
     {
-        var result = await chainsService.CreateChain(chainRequest.PentestObj, chainRequest.Tags);
+        var user = await userService.GetUserById(chainRequest.CreatorId);
+        
+        if (user == null) 
+            return BadRequest("Пользователь не найден");
+        
+        var result = await chainsService.CreateChain(chainRequest.PentestObj, user, chainRequest.Tags);
         if (result.IsFailure) 
             return BadRequest(result.Error);
         

@@ -16,9 +16,9 @@ public class ChainService(IChainRepository chainRepository, ITagRepository tagRe
     public async Task<Chain?> GetChainById(int chainId) => 
         await chainRepository.GetChainById(chainId);
     
-    public async Task<Result<Chain>> CreateChain(string pentestObj, List<Tag> tags)
+    public async Task<Result<Chain>> CreateChain(string pentestObj, User creator, List<Tag> tags)
     {
-        var chain = Chain.CreateChain(pentestObj);
+        var chain = Chain.CreateChain(pentestObj, creator);
         if (chain.IsFailure) return Result.Failure<Chain>(chain.Error);
 
         foreach (var t in tags)
