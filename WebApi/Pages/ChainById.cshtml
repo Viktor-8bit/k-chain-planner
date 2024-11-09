@@ -1,4 +1,7 @@
-﻿@page "{id:int}"
+﻿
+
+
+@page "{id:int}"
 @model WebApi.Pages.ChainByIdModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
@@ -9,7 +12,8 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="ru">
+    
     <head>
         @await Html.PartialAsync("Components/Header")
         <link rel="stylesheet" type="text/css" href="~/css/ChainById.css" />
@@ -32,7 +36,9 @@
                 <div class="container row tag_container">
                     @foreach (var tag in @Model.Chain!.Tags)
                     {
-                        <span class="col col-md-4 badge rounded-pill text-bg-@tag.TagColor">@tag.InstrumentName</span>
+                        <a href="@tag.InstrumentUrl" class="col col-md-4 badge rounded-pill text-bg-@tag.TagColor">
+                                @tag.InstrumentName
+                        </a>
                     }
                 </div>
             </div>
@@ -81,7 +87,7 @@
                                     <p class="chains_description">@chainStep.Description</p>
                                     <div class="row mt-3">
                                         <div class="col d-flex justify-content-start">
-                                        <button type="submit" class="btn btn-primary global_button" onclick="window.location.href='/UpdateChainStep/@chainStep.Id'">
+                                            <button type="submit" class="btn btn-primary global_button" onclick="window.location.href='/UpdateChainStep/@chainStep.Id'">
                                                 <i class="bi bi-pencil-square"></i>
                                             </button>
                                             <form method="post">

@@ -13,6 +13,8 @@ public class User
         HashPassword = hashPassword;
     }
     
+    private User() {}
+    
     public static Result<User> CreateUser(string userName, string hashPassword)
     {
         if (string.IsNullOrEmpty(userName))

@@ -33,8 +33,14 @@
 
     <ItemGroup>
       <Folder Include="wwwroot\csv\" />
+      <Folder Include="wwwroot\FrontJS\" />
       <Folder Include="wwwroot\img\" />
       <Folder Include="wwwroot\js\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="webpack\package-lock.json" />
+      <_ContentIncludedByDefault Remove="webpack\package.json" />
     </ItemGroup>
 
 </Project>

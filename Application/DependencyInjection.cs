@@ -10,8 +10,7 @@ namespace Application;
 
 public static class DependencyInjection
 {
-    
-    
+   
     public static IServiceCollection AddApplication(this IServiceCollection service)
     {
 
@@ -25,6 +24,7 @@ public static class DependencyInjection
         service.AddScoped<ChainService>();
         service.AddScoped<ChainStepService>();
         service.AddScoped<TagService>();
+        service.AddScoped<UserService>();        
         
         return service;
     

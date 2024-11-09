@@ -18,6 +18,7 @@ public static class DependencyInjection
         service.AddScoped<IChainRepository, ChainRepository>();
         service.AddScoped<ITagRepository, TagRepository>();
         service.AddScoped<IChainStepRepository, ChainStepRepository>();
+        service.AddScoped<IUserRepository, UserRepository>();
         
         return service;
     }

@@ -16,11 +16,7 @@ public class Tag
         InstrumentUrl = instrumentUrl;
     }
 
-    private Tag(string instrumentName, string instrumentUrl)
-    {
-        InstrumentName = instrumentName;
-        InstrumentUrl = instrumentUrl;
-    }
+    private Tag() {}
     
     public int Id { get; private set; }
     public TagColor TagColor { get; set; }

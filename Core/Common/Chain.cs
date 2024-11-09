@@ -12,7 +12,7 @@ public class Chain
         PentestObj = pentestObj;
     }
     
-    public Chain() {}
+    private Chain() {}
     
     public int Id { get; private set; }
     public string PentestObj { get; private set; }

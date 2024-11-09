@@ -14,10 +14,18 @@ public class UserService(IUserRepository userRepository)
     
     public async Task<User?> GetUserById(int userId) => 
         await userRepository.GetUserById(userId);
-    
-    public async Task<Result<User>> CreateUser(User user) => 
-        await userRepository.CreateUser(user);
-    
-    public async Task<Result<User>> DeleteUser(int userId) => 
-        await userRepository.DeleteUser(userId);
+
+    public async Task<Result<User>> CreateUser(User user)
+    {
+        var result = await userRepository.CreateUser(user);
+        return result;
+    }
+
+    public async Task<Result<User>> DeleteUser(int userId)
+    {
+        var result = await userRepository.DeleteUser(userId);
+        if (result.IsFailure)
+            return Result.Failure<User>(result.Error);
+        return Result.Success(result.Value);
+    } 
 }
