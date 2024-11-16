@@ -9,7 +9,7 @@ public record ChainResponce
 {
     public int Id { get; set; }
     public string PentestObj { get; set; }
-    public List<Tag> Tags { get; set; }
+    public List<Tag> Tags { get; set; } = [];
     
     public int StepChainLastId { get; set; } = 1;
 }
