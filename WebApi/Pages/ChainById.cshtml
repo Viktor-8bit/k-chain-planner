@@ -29,19 +29,31 @@
             }
             @if (@Model.Chain is not null) 
             {
-            <div class="chain_block chain_info">
-                <p class="chains_title">Тестируемый объект</p>
-                <p class="chains_label">@Model.Chain!.PentestObj</p>
-                <p class="chains_title">Используемые технологии</p>
-                <div class="container row tag_container">
-                    @foreach (var tag in @Model.Chain!.Tags)
-                    {
-                        <a href="@tag.InstrumentUrl" class="col col-md-4 badge rounded-pill text-bg-@tag.TagColor">
+                <div class="chain_block chain_info">
+
+                    <div class="row">
+                        <div class="col d-flex justify-content-start mr-5">
+                            <button type="submit" class="btn btn-primary global_button" onclick="window.location.href='/UpdateChainProgect/@Model.Id'">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                            <form method="post">
+                                <button type="submit" class="btn btn-primary global_button" asp-page-handler="deleteChain"><i class="bi bi-trash"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <p class="chains_title">Тестируемый объект</p>
+                    <p class="chains_label">@Model.Chain!.PentestObj</p>
+                    <p class="chains_title">Используемые технологии</p>
+                    <div class="container row tag_container">
+                        @foreach (var tag in @Model.Chain!.Tags)
+                        {
+                            <a href="@tag.InstrumentUrl" class="col col-md-4 badge rounded-pill text-bg-@tag.TagColor">
                                 @tag.InstrumentName
-                        </a>
-                    }
+                            </a>
+                        }
+                    </div>
                 </div>
-            </div>
             }
             
             @if (@Model.ChainSteps!.Count > 0)

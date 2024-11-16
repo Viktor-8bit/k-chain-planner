@@ -84,4 +84,12 @@ public class ChainByIdModel : PageModel
         return Redirect($"/ChainById/{Id}");
     }
     
+    
+    
+    public async Task<IActionResult> OnPostDeleteChainAsync()
+    {
+        await _chainService.DeleteChain((int)Id!);
+        return Redirect("/");
+    }
+    
 }
