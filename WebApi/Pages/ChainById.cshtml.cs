@@ -3,7 +3,6 @@
 
 
 
-using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Application.Services;
 using WebApi.Contracts;

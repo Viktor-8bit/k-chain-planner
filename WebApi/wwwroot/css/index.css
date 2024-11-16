@@ -2,19 +2,6 @@
 
 
 
-
-.index_block {
-    border-bottom: 10px dotted #c29ffa ;
-    display: flex;
-}
-
-.index_block p {
-    padding: 4% 0 0 5%;  /* top, right, bottom, left */
-    font-size: 35px;
-    font-weight: 500;
-    color: #c29ffa;
-}
-
 .chains {
     align-items: center;
 }
