@@ -12,7 +12,28 @@
     background-color: #6c757d;
 }
 
+
+.search_label {
+    font-size: 20px;
+    white-space: nowrap;
+    color: #ffffff;
+}
+
+.search_block {
+    background: #343a40;
+    padding: 1% 1% 0 45%;
+    position: sticky;
+}
+
+
 @media (max-width: 576px) {
+
+    .search_block {
+        background: #343a40;
+        padding: 2% 25% 0 25%;
+        position: sticky;
+    }
+
     .tag_container {
         margin: 0 25% 0 25%;
     }

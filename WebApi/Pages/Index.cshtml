@@ -12,11 +12,21 @@
     <head>
         @await Html.PartialAsync("Components/Header")
         <link rel="stylesheet" type="text/css" href="~/css/index.css" />
+        
+        <!-- Поле поиска Chain Project -->
+        <form class="search_block d-flex justify-content-start" method="get">
+            <div class="mb-3 row d-flex align-items-center">
+                <label class="col form-label search_label">Поиск проекта</label>
+                <input id="search" name="Search" value="@Model.Search" type="text" class="col form-control">
+                <button type="submit" class="btn btn-outline-info global_button ms-4 col" asp-page-handler="add">Найти</button>
+            </div>
+        </form>
+        
     </head>
 
     <body>
         <div class="index_block">
-            <p>Все Chain Project</p>
+            <p>Chain Project's</p>
         </div>
 
         <div class="chains">
@@ -46,5 +56,6 @@
                 </div>
             }
         </div>
+    
     </body>
 </html>

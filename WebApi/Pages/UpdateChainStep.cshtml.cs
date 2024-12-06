@@ -46,16 +46,18 @@ public class UpdateChainStep : PageModel
     public async Task<IActionResult> OnPostUpdateAsync()
     {
         if (!ModelState.IsValid)
-            return Page();
+            return new JsonResult(new { message = "форма не валидна" });
+        
         if (Id == null)
-            return Page();
+            return new JsonResult(new { message = "родительский chain не найден" });
+
         
         var chainStepResponce = await _chainStepService.GetChainStepById((int)this.Id);
         var fatherChainId = chainStepResponce!.FatherChain.Id;
 
         var result = await _chainStepService.UpdateChainStep((int)Id, _mapper.Map<ChainStep>(ChainStepRequest));
         if (result.IsFailure)
-            return Page();
+            return new JsonResult(new { message = result.Error });
         
         return Redirect($"/ChainById/{fatherChainId!}");
     }

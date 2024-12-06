@@ -14,6 +14,12 @@ public class ChainRepository(ApplicationContext _DbContext): IChainRepository
             .Include(c => c.Tags)
             .ToList<Chain>();
 
+    public async Task<IEnumerable<Chain?>> SearchChains(string search) => 
+        _DbContext.Chains
+            .Include(c => c.Tags)
+            .Where(c => c.PentestObj.Contains(search))
+            .ToList<Chain>();
+    
     public async Task<Chain?> GetChainById(int chainId)
     {
         return await _DbContext.Chains

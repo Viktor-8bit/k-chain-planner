@@ -15,7 +15,7 @@
     <head>
         @await Html.PartialAsync("Components/Header")
         <link rel="stylesheet" type="text/css" href="~/css/ChainById.css" />
-        <link rel="stylesheet" type="text/css" href="~/css/UpdateChainStepRequest.css" />
+        <link rel="stylesheet" type="text/css" href="~/css/UpdateChainStep.css" />
     </head>
     <body>
         <div class="mt-4">
@@ -29,7 +29,7 @@
             @if (@Model.ChainStepRequest is not null)
             {
                 <div class="d-block justify-content-center chain_add chain_block">
-                    <form method="post">
+                    <form method="post" id="form_with_date">
                         <input type="hidden" asp-for="@Model.ChainStepRequest.StepId"/>
                         <p class="chains_H1">Обновление ChainStep</p>
                         <div class="row mt-3">
@@ -37,7 +37,7 @@
                                 <label class="chains_title">Название этапа</label>
                             </div>
                             <div class="col">
-                                <input value="@Model.ChainStepRequest!.Title" asp-for="ChainStepRequest.Title" type="text" class="form-control">
+                                <input id="title" value="@Model.ChainStepRequest!.Title" asp-for="ChainStepRequest.Title" type="text" class="form-control">
                             </div>
                         </div>
                         <div class="row mt-3">
@@ -47,8 +47,8 @@
                             <div class="col d-flex align-items-center justify-content-start">
                                 <div class="chains_title d-flex align-items-center justify-content-start">
                                     <iframe src="~/csv/[.svg" width="15" height="50" sandbox></iframe>
-                                    <input value="@StartDate" asp-for="@Model.ChainStepRequest!.Start" type="date" class="form-control-sm">
-                                    <input value="@EndDate" asp-for="@Model.ChainStepRequest!.End" type="date" class="form-control-sm">
+                                    <input id="date_one" value="@StartDate" asp-for="@Model.ChainStepRequest!.Start" type="date" class="form-control-sm">
+                                    <input id="date_two" value="@EndDate" asp-for="@Model.ChainStepRequest!.End" type="date" class="form-control-sm">
                                     <iframe src="~/csv/].svg" width="15" height="50" sandbox></iframe>
                                 </div>
                             </div>
@@ -58,14 +58,21 @@
                                 <label class="chains_title">Описание</label>
                             </div>
                             <div class="col">
-                                <textarea rows="5" cols="120" asp-for="@Model.ChainStepRequest!.Description" type="text" class="form-control" row="10"></textarea>
+                                <textarea id="description" rows="5" cols="120" asp-for="@Model.ChainStepRequest!.Description" type="text" class="form-control" row="10"></textarea>
                             </div>
                         </div>
+                        
                         <button type="submit" class="btn btn-outline-info global_button mt-4" asp-page-handler="update">Сохранить изменения</button>
                         <button type="button" class="btn btn-outline-info global_button mt-4" onclick="window.location.href='/ChainById/@Model.FatherChainId'">Отменить изменения</button>
+
+                        <div id="error" class="mt-4"></div>
+                        
                     </form>
                 </div>
             }
         </div>
+
+        <script src="/js/DateValidation.js"></script>
+        <script src="/Components/Jquery/jquery-3.7.1.slim.min.js"></script>
     </body>
 </html>

@@ -34,7 +34,7 @@ public class CreateChainProgect : PageModel
         var result = await _chainService.CreateChain(ChainRequest.PentestObj, user!, new List<Tag>());
         
         if (result.IsFailure)
-            return Page();
+            return new JsonResult(new { message = result.Error });
         
         return Redirect("/");
     }

@@ -13,6 +13,10 @@ public class ChainService(IChainRepository chainRepository, ITagRepository tagRe
     public async Task<IEnumerable<Chain>?> GetChains() => 
         await chainRepository.GetChains();
     
+    public async Task<IEnumerable<Chain>?> SearchChains(string search) => 
+        await chainRepository.SearchChains(search);
+    
+    
     public async Task<Chain?> GetChainById(int chainId) => 
         await chainRepository.GetChainById(chainId);
     
