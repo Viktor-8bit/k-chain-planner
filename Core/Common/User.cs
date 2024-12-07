@@ -7,6 +7,14 @@ namespace Core.Common;
 
 public class User
 {
+    
+    public User(int id, string name, string hashPassword)
+    {
+        Id = id;
+        Name = name;
+        HashPassword = hashPassword;
+    }
+    
     public User(string name, string hashPassword)
     {
         Name = name;

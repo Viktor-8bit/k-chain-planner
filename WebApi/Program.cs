@@ -1,5 +1,7 @@
 using Application;
 using Infrastructure;
+using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Microsoft.Extensions.Configuration;
 using static WebApi.DependencyInjection;
@@ -27,8 +29,7 @@ builder.Services
     .AddWebApi();
 
 
-// public static string connectionString = "Host=localhost;Port=5432;Database=killchan;Username=postgres;Password=4z5636spxr1p8wxkb186akyr84e4e7o78";
-//docker run -p 5432:5432 --name postgres -e POSTGRES_PASSWORD=4z5636spxr1p8wxkb186akyr84e4e7o78 -d postgres
+//docker run -p 5432:5432 --name postgres -e POSTGRES_PASSWORD=4z5636spxr1p8wxkb186akyr84e4e7o78 --network web_tech -d postgres
 
 var app = builder.Build();
 
@@ -57,6 +58,13 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<ApplicationContext>();
+    context.Database.Migrate();
+}
 
 
 app.Run();

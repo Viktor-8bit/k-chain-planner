@@ -119,6 +119,57 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tags");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            InstrumentName = "nmap",
+                            InstrumentUrl = "https://nmap.org/",
+                            TagColor = 0
+                        },
+                        new
+                        {
+                            Id = -2,
+                            InstrumentName = "BurpSuite",
+                            InstrumentUrl = "https://portswigger.net/burp",
+                            TagColor = 1
+                        },
+                        new
+                        {
+                            Id = -3,
+                            InstrumentName = "Metasploit",
+                            InstrumentUrl = "https://github.com/rapid7/metasploit-framework",
+                            TagColor = 2
+                        },
+                        new
+                        {
+                            Id = -4,
+                            InstrumentName = "OWASP",
+                            InstrumentUrl = "https://owasp.org/www-community/Vulnerability_Scanning_Tools",
+                            TagColor = 3
+                        },
+                        new
+                        {
+                            Id = -5,
+                            InstrumentName = "WPScan",
+                            InstrumentUrl = "https://kali.tools/?p=156",
+                            TagColor = 4
+                        },
+                        new
+                        {
+                            Id = -6,
+                            InstrumentName = "sqlmap",
+                            InstrumentUrl = "https://kali.tools/?p=816",
+                            TagColor = 5
+                        },
+                        new
+                        {
+                            Id = -7,
+                            InstrumentName = "wfuz",
+                            InstrumentUrl = "https://github.com/xmendez/wfuzz",
+                            TagColor = 6
+                        });
                 });
 
             modelBuilder.Entity("Core.Common.User", b =>
@@ -140,6 +191,14 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            HashPassword = "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+                            Name = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("ChainTag", b =>
