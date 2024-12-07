@@ -17,13 +17,12 @@ COPY . .
 WORKDIR "/src/WebApi"
 RUN dotnet build "WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
-RUN dotnet tool install --global dotnet-ef
-ENV PATH="$PATH:/root/.dotnet/tools"
-WORKDIR "/src"
-RUN dotnet ef database update --project Infrastructure --startup-project WebApi
+#RUN dotnet tool install --global dotnet-ef
+#ENV PATH="$PATH:/root/.dotnet/tools"
+#WORKDIR "/src"
+#RUN dotnet ef database update --project Infrastructure --startup-project WebApi
 
 
-WORKDIR "/src/WebApi"
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false

@@ -9,12 +9,21 @@ namespace Core.Common;
 public class Tag
 {
 
+    public Tag(int id, TagColor tagColor, string instrumentName, string instrumentUrl)
+    {
+        Id = id;
+        TagColor = tagColor;
+        InstrumentName = instrumentName;
+        InstrumentUrl = instrumentUrl;
+    }
+    
     public Tag(TagColor tagColor, string instrumentName, string instrumentUrl)
     {
         TagColor = tagColor;
         InstrumentName = instrumentName;
         InstrumentUrl = instrumentUrl;
     }
+
 
     private Tag() {}
     

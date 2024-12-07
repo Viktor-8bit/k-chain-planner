@@ -14,10 +14,11 @@
 * Docker виртуализация
 * 1 гб оперативной памяти 
 * 1 ядро
+* Для запуска скачать dokcer-compose файл и запустить командой: `docker-compose up`
 
 ## Описание непроектных файлов:
-1. Dckerfile - чтобы собрать docker контейнер
-2. Docker-compose.yaml - чтобы собрать проект с PosgreSQL базой данных
+1. Dckerfile - для сборки ASP .net 
+2. Docker-compose.yaml - для сборки проекта с PosgreSQL базой данных
 3. README.md - описание проекта
 
 
