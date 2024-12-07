@@ -12,11 +12,8 @@ public class ApplicationContext : DbContext
     
     public DbSet<User> Users { get; set; }
     
-    
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseNpgsql(ConnectionString.connectionString);
-    }
+    public ApplicationContext(DbContextOptions<ApplicationContext> options)
+        : base(options) { }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -1,6 +1,7 @@
 using Application;
 using Infrastructure;
 using Serilog;
+using Microsoft.Extensions.Configuration;
 using static WebApi.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,9 +23,12 @@ builder.Services.AddSwaggerGen();
 
 builder.Services
     .AddApplication()
-    .AddInfrastracture()
+    .AddInfrastracture(builder.Configuration.GetConnectionString("DefaultConnection"))
     .AddWebApi();
 
+
+// public static string connectionString = "Host=localhost;Port=5432;Database=killchan;Username=postgres;Password=4z5636spxr1p8wxkb186akyr84e4e7o78";
+//docker run -p 5432:5432 --name postgres -e POSTGRES_PASSWORD=4z5636spxr1p8wxkb186akyr84e4e7o78 -d postgres
 
 var app = builder.Build();
 
