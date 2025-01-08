@@ -37,6 +37,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="wwwroot\Components\MySchedule\" />
       <Folder Include="wwwroot\csv\" />
       <Folder Include="wwwroot\img\" />
     </ItemGroup>
